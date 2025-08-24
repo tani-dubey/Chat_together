@@ -31,7 +31,6 @@ def home():
             rooms[room]=room
             creator_name=name 
             rooms[room] = {"creator_name":creator_name,"members":1,"messages":[]}
-            create=False
             
         if join!=False and room not in rooms:
             return render_template("home.html",error="Please enter a valid room code!",name=name,code=code)

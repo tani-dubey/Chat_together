@@ -4,6 +4,7 @@
    
   <form method="post" class="join-form">
     <h3>Enter The Chat Room</h3>
+
     <div >
         <label for ="name">Name:</label>
         <input type ="text" placeholder="Enter your name!" name="name" value="{{name}}" required>
@@ -12,14 +13,16 @@
         <input type="text" name="code" placeholder="Enter the room code" value="{{code}}">
         <button type="submit" name="join" class="create">Join</button>
     </div>
-     <div class="create">
-        <button type="submit" name="create"class="create">Create a room</button>
-     </div>
+    <div class="create">
+    <button type="submit" name="create"class="create">Create a room</button>
+    </div>
+
     {% if error %}
     <ul>
         <li>{{ error }}</li>
     </ul>
     {% endif %}
-</form>
+
+   </form>
 
  {% endblock %}
