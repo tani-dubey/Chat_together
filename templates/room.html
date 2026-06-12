@@ -20,47 +20,9 @@
             <button id="send_btn" name="send_btn" onclick="sendMessage()">Send</button>
         </div>
     </div>    
+    <script src="../static/js/chat.js"></script>
 
-    <script >
-        //initialize socketio
-        var socketio=io();
-        
-        //Listen to messages coming from main.py
-        const messageList=document.getElementById("messages-list")
-        
-        //message is coming from main.py and messageList is the section where
-        //messages will be displayed
-        const createMessage= (name,message)=> {
-            const content= `
-            <div>
-             <span> <strong>${name}</strong>: ${message} </span> <!--strong tag makes it bold -->
-                <span class="time"> ${new Date().toLocaleTimeString()} </span>
-            </div>
-            `;
-            messageList.innerHTML += content;
-        }
-        socketio.on("message",(data) => {
-           createMessage(data.name,data.message);
-        });
-        
-        const sendMessage= () => {
-            const said=document.getElementById("message-input");
-            if(said.value==""){
-                return;
-            }
-            socketio.emit("message",{
-               data:said.value
-            });
-            said.value="";
-        }
-        
-        document.getElementById("message-input").addEventListener("keypress",function(event){
-            if(event.key==="Enter"){
-                event.preventDefault(); //prevent default behaviour of enter key
-                sendMessage();
-            }
-        });
-    </script>
+ 
 {% for msg in messages %}
     <script>
         createMessage("{{msg.name}}","{{msg.message}}");
