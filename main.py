@@ -1,16 +1,20 @@
 from flask import Flask,render_template,request,redirect,session,url_for
 from flask_socketio import SocketIO,join_room,leave_room,send
 import random
+import os
 from string import ascii_lowercase,ascii_uppercase, digits
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 
-client = MongoClient("mongodb://localhost:27017/")
+# from dotenv import load_dotenv
+# load_dotenv()
+# print("mongo url: ",os.getenv("MONGO_URI"))
+client = MongoClient(os.getenv("MONGO_URI"))
 db = client["chat_app"]
 users_collection = db["users"]
 
 app=Flask(__name__)
-app.config["SECRET_KEY"]= "dvcyidsvtlu"
+app.config["SECRET_KEY"]= os.getenv("SECRET_KEY")
 socketio=SocketIO(app)
 
 rooms={}
@@ -202,4 +206,4 @@ def message(data):
     rooms[room]["messages"].append(content)
 
 if __name__=="__main__":
-    socketio.run(app)
+    socketio.run(app,debug=True)
